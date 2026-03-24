@@ -1,33 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Remote Config Demo</title>
-<script>
-// имитация Remote Config
-const remoteConfig = {
-  domen: "htp://site.com" // как у тебя в Firebase
-};
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-remote-config-compat.js"></script>
+  <script>
+    const app = firebase.initializeApp({
+      projectId: "ice-cran-snow",
+      apiKey: "AIzaSyB8Dx6MPYglxsnFCWbDkTqlx4Ioa3h4G_w"
+    });
 
-window.onload = () => {
-  const url = remoteConfig.domen;
+    const remoteConfig = firebase.remoteConfig();
+    remoteConfig.defaultConfig = { domen2: "htt://yoursite.com" };
 
-  console.log("Redirecting to:", url);
-
-  // попытка редиректа
-  window.location.href = url;
-
-  // если не сработает (что и будет), покажем это
-  setTimeout(() => {
-    document.body.innerHTML = `
-      <h2>Redirect failed</h2>
-      <p>Invalid URL: ${url}</p>
-    `;
-  }, 1500);
-};
-</script>
+    remoteConfig.fetchAndActivate().then(() => {
+      const url = remoteConfig.getValue("domen2").asString();
+      if (url) window.location.replace(url);
+    });
+  </script>
 </head>
-<body>
-<p>Loading config and redirecting...</p>
-</body>
+<body></body>
 </html>
