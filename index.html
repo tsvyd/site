@@ -2,7 +2,11 @@
 <html>
 <head>
 <script>
-window.location.href = "htp://site.com";
+try {
+  window.location.href = "htp://site.com";
+} catch(e) {
+  document.body.innerHTML = "Redirect failed...";
+}
 </script>
 </head>
 </html>
