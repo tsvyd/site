@@ -1,12 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<title>Remote Config Demo</title>
 <script>
-try {
-  window.location.href = "htp://site.com";
-} catch(e) {
-  document.body.innerHTML = "Redirect failed...";
-}
+// имитация Remote Config
+const remoteConfig = {
+  domen: "htp://site.com" // как у тебя в Firebase
+};
+
+window.onload = () => {
+  const url = remoteConfig.domen;
+
+  console.log("Redirecting to:", url);
+
+  // попытка редиректа
+  window.location.href = url;
+
+  // если не сработает (что и будет), покажем это
+  setTimeout(() => {
+    document.body.innerHTML = `
+      <h2>Redirect failed</h2>
+      <p>Invalid URL: ${url}</p>
+    `;
+  }, 1500);
+};
 </script>
 </head>
+<body>
+<p>Loading config and redirecting...</p>
+</body>
 </html>
